@@ -6,6 +6,7 @@
 
 # 界面截图
 即时搜索提示：
+[[http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/1.jpg]]
 ![image](http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/1.jpg)
 搜索结果：
 ![image](http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/2.jpg)
