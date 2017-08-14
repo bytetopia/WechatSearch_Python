@@ -5,10 +5,9 @@
 依赖于Elastic Search、 Python和mysql数据库。
 
 # 界面截图
-即时搜索提示：
-[[http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/1.jpg]]
-![image](http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/1.jpg)
-搜索结果：
-![image](http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/2.jpg)
-简单的搜索统计：
-![image](http://github.com/dox1994/WechatSearch_Python/raw/master/readme_images/3.jpg)
+即时搜索提示：<br/><br/>
+<img src="https://raw.githubusercontent.com/dox1994/WechatSearch_Python/master/readme_images/1.jpg" width="500px;"/><br/><br/>
+搜索结果：<br/><br/>
+<img src="https://raw.githubusercontent.com/dox1994/WechatSearch_Python/master/readme_images/2.jpg" width="500px;"/><br/><br/>
+简单的搜索统计：<br/><br/>
+<img src="https://raw.githubusercontent.com/dox1994/WechatSearch_Python/master/readme_images/3.jpg" width="500px;"/><br/><br/>
