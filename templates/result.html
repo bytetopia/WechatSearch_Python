@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索 - 一只技术宅</title>
+    <!-- Vendors -->
+        <!-- Material design colors -->
+        <link href="{% static 'css/material-design-iconic-font.min.css' %}" rel="stylesheet">
+        <!-- CSS animations -->
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+        <!-- Site -->
+        <link rel="stylesheet" href="{% static 'css/app_1.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app_2.min.css' %}">
+        <!--user custom style-->
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <!-- Page Loader JS -->
+        <script src="{% static 'js/page-loader.min.js' %}" async></script>
+
+    <style>
+        .mi-footer{
+            position:relative !important;
+            padding:40px 0 80px 0;
+        }
+        .highlight-part{
+            font-style: normal;
+        }
+        .highlight-part span{
+            color: mediumvioletred;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Start page loader -->
+<div id="page-loader">
+    <div class="page-loader__spinner"></div>
+</div>
+<!-- End page loader -->
+
+<header id="header">
+    <div class="header__main">
+        <div class="container">
+            <a class="logo" href="/index.html">
+                <img src="{% static 'img/logo.png' %}" alt="">
+                <div class="logo__text">
+                    <span>一只技术宅</span>
+                    <span>微信号内搜索引擎</span>
+                </div>
+            </a>
+        </div>
+        <br/>
+        <div class="container">
+            <form action="/api/search" method="post" id="queryForm">
+                <div class="search">
+                    <div class="search__body mi-search-bar">
+                        {% csrf_token %}
+                        <input type="hidden" name="currentPage" id="currentPage" value="1"/>
+                        <input type="text" name="queryString" class="form-control search__input" placeholder="搜索任何你想了解的..." value="{{ keyword }}">
+                        <button class="btn btn-primary"><i class="zmdi zmdi-search f-20"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-push-2 col-xs-12 listings-list">
+            {% if all_hits %}
+                <p class="text-center">共检索出 {{ total_nums }} 条结果，用时 {{ time_span }} 秒</p><br/>
+            {% endif %}
+            {% for p in all_hits %}
+                <div class="listings-grid__item">
+                    <a href="{{ p.plink }}" target="_blank" class="media">
+                        <div class="media-body">
+                            <div class="mi-cate-label color-status-{{ p.cid }}">{{ p.cname }}</div>
+                            <div class="listings-grid__body highlight-part">
+                                <h5>{{ p.ptitle|safe }}</h5>
+                                <small>{{ p.pdate }}</small>
+                                <small>{{ p.ptext|safe }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <p class="text-center">啊_(:з)∠)_没有找到结果……试试换个关键词，或者<a href="https://www.baidu.com/s?wd={{ keyword }}" target="_blank">去百度</a>吧~</p><br/>
+            {% endfor %}
+
+            {% if all_hits %}
+            <nav class="text-center">
+                    <ul class="pagination">
+{#                        <li id="pn-pre">#}
+{#                            <a href="#">#}
+{#                                <i class="zmdi zmdi-chevron-left"></i>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="active"><a href="#">1</a></li>#}
+{#                        <li><a href="#">2</a></li>#}
+{#                        <li><a href="#">3</a></li>#}
+{#                        <li><a href="#">4</a></li>#}
+{#                        <li><a href="#">5</a></li>#}
+{#                        <li id="pn-next">#}
+{#                            <a href="#">#}
+{#                                <i class="zmdi zmdi-chevron-right"></i>#}
+{#                            </a>#}
+{#                        </li>#}
+                    </ul>
+                </nav>
+
+            <br/>
+
+            <p class="text-center">没有想要的结果？<a href="https://www.baidu.com/s?wd={{ keyword }}" target="_blank">带我去百度</a></p><br/>
+            {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="p-30"></div>
+<div class="p-30"></div>
+
+<footer class="mi-footer">
+    <div class="container col-md-8 col-md-push-2 col-xs-12">
+        <br/>
+        <a href="http://codingcat.cn/qrcode_wechat.jpg">Copyright &copy; 一只技术宅</a>
+        <br/>
+    </div>
+</footer>
+
+<!-- Javascript -->
+
+ <!-- jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Waves button ripple effects -->
+    <script src="{% static 'js/waves.min.js' %}"></script>
+    <!-- Site functions and actions -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <!--- pagination -->
+    <script src="{% static 'js/pagination.js' %}"></script>
+    <script>
+        //分页
+        $(".pagination").pagination({{ total_nums }}, {
+            current_page :{{ currentPage|add:'-1' }}, //当前页码
+            items_per_page :10,
+            display_msg :false,
+            callback :pageselectCallback
+        });
+        function pageselectCallback(page_id, jq) {
+            $('#currentPage').val(page_id+1);
+            $('#queryForm').submit()
+        }
+    </script>
+
+</body>
+
+</html>

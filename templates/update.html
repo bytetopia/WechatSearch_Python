@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<!--[if IE 9 ]><html lang="en" class="ie9"><![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>搜索 - 一只技术宅</title>
+         <!-- Vendors -->
+        <!-- Material design colors -->
+        <link href="{% static 'css/material-design-iconic-font.min.css' %}" rel="stylesheet">
+        <!-- CSS animations -->
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+        <!-- Site -->
+        <link rel="stylesheet" href="{% static 'css/app_1.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app_2.min.css' %}">
+        <!--user custom style-->
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <style>
+            body{
+                background-color: #3f51b5;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="mi-main-container col-md-8 col-md-push-2 col-xs-12">
+            <div class="header__main">
+                <div class="container">
+                    <a class="logo" href="/index.html">
+                        <img src="{% static 'img/logo.png' %}" alt="">
+                        <div class="logo__text">
+                            <span>一只技术宅</span>
+                            <span>微信号内搜索引擎</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                <form onsubmit=" return update()" action="/api/update" method="post">
+                    <div class="search">
+                        <div class="search__body mi-search-bar">
+                            <input type="hidden" name="method" value="update"/>
+                            <input type="text" id="promptText" disabled class="form-control search__input" placeholder="点击按钮更新索引">
+                            <button type="submit" class="btn btn-primary"><i class="zmdi zmdi-upload f-20"></i></button>
+                            {% csrf_token %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br/><br/>
+        </div>
+
+        <footer class="mi-footer">
+                <div class="container col-md-8 col-md-push-2 col-xs-12">
+                    <br/>
+                    <a href="http://codingcat.cn/qrcode_wechat.jpg">Copyright &copy; 一只技术宅</a>
+                    <br/>
+                </div>
+        </footer>
+
+        <!-- Javascript -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <!-- Bootstrap -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!-- Waves button ripple effects -->
+        <script src="{% static 'js/waves.min.js' %}"></script>
+        <!-- Site functions and actions -->
+        <script src="{% static 'js/app.min.js' %}"></script>
+
+        <script>
+            function update() {
+                document.getElementById('promptText').innerText= '正在更新索引，可能耗时较长，请不要刷新或退出网页';
+                return true;
+            }
+        </script>
+    </body>
+</html>

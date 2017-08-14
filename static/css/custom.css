@@ -1,0 +1,119 @@
+/*搜索功能*/
+.mi-search-bar{
+    padding:0 30px !important;
+    margin:20px 0 !important;
+}
+.mi-search-bar button{
+    position:absolute;
+    top:0;
+    right:30px;
+    height:100%;
+    padding:0 20px;
+}
+.mi-main-container,.header__main{
+    height:100% !important;
+    background-color: #3f51b5;
+}
+.mi-footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    text-align: center;
+    padding:30px 0;
+    background-color: #3f51b5;
+}
+.mi-footer a{
+    color:#FFFFFF;
+}
+.mi-cate-label{
+    float:right;
+    margin:15px 20px 0 0;
+}
+
+/*讲座列表页面*/
+.xin-leclist-status{
+    float:left !important;
+}
+.color-status-0{
+    color:#ff1b68 !important;
+}
+.color-status-1{
+    color: #10aaff !important;
+}
+.color-status-2{
+    color: #09bb46 !important;
+}
+.color-status-3{
+    color: #ffb423 !important;
+}
+.color-status-4{
+    color: #7940ff !important;
+}
+.color-status-5{
+    color: #747474 !important;
+}
+.background-status-0{
+    background-color:#ff1b68 !important;
+}
+.background-status-1{
+    background-color:#10aaff !important;
+}
+.background-status-2{
+    background-color:#09bb46 !important;
+}
+.background-status-3{
+    background-color:#ffb423 !important;
+}
+.background-status-4{
+    background-color:#ffb423 !important;
+}
+.background-status-5{
+    background-color:#7940ff !important;
+}
+.background-status-6{
+    background-color:#747474 !important;
+}
+/*用户列表页面*/
+.xin-userlist-div{
+    margin-left:0;
+}
+.xin-userlist-div div{
+    float:left;
+}
+.xin-zmdi-box{
+    font-size: 36px;
+    margin-right:20px;
+}
+.xin-userlist-label{
+    float:right;
+    margin:4px 30px 0 0;
+    padding:3px 10px;
+    color:#FFFFFF;
+    border-radius:4px;
+}
+/*评论列表*/
+.xin-cmtlist-cmtitem .m-t-15{
+    margin:10px 0 !important;
+}
+.xin-cmtlist-cmtitem .rmd-rate{
+    margin-top:5px;
+}
+.xin-cmtlist.list-group-item{
+    border:none !important;
+    margin-bottom:20px;
+}
+/*管理员*/
+
+/*管理员顶部*/
+.xin-admin-label{
+    padding:2px 6px;
+    border-radius:5px;
+    margin:0 10px;
+}
+/*创建讲座页面*/
+.xin-newlec-form-list div{
+    margin-bottom:40px;
+}
+.xin-newlec-form-list .checkbox{
+    float:left;
+}

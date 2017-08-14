@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<!--[if IE 9 ]><html lang="en" class="ie9"><![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>搜索 - 一只技术宅</title>
+        <!-- Vendors -->
+        <!-- Material design colors -->
+        <link href="{% static 'css/material-design-iconic-font.min.css' %}" rel="stylesheet">
+        <!-- CSS animations -->
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+        <!-- Site -->
+        <link rel="stylesheet" href="{% static 'css/app_1.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app_2.min.css' %}">
+        <!--user custom style-->
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <style>
+            body{
+                background-color: #3f51b5;
+            }
+            /*联想下拉区域*/
+            .suggest-list {border:1px solid #ddd;background:#fff;line-height: 30px;list-style: none;-webkit-padding-start:5px;}
+            .suggest-list li {padding:2px 5px;border-bottom:1px solid #ddd;cursor:default;zoom:1}
+            .suggest-item-even {background:#E8F2FE}
+            .suggest-curr-item {background:#6399CD; color:#fff;}
+        </style>
+    </head>
+
+    <body>
+        <div class="mi-main-container col-md-8 col-md-push-2 col-xs-12">
+            <div class="header__main">
+                <div class="container">
+                    <a class="logo" href="/index.html">
+                        <img src="{% static 'img/logo.png' %}" alt="">
+                        <div class="logo__text">
+                            <span>一只技术宅</span>
+                            <span>微信号内搜索引擎</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                <form action="/api/search" method="post" id="search_form">
+                    <div class="search">
+                        <div class="search__body mi-search-bar">
+                            {% csrf_token %}
+                            <input id="auto-suggest" type="text" name="queryString" class="form-control search__input" placeholder="搜索任何你想了解的...">
+                            <button type="submit" class="btn btn-primary"><i class="zmdi zmdi-search f-20"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br/><br/>
+        </div>
+
+        <footer class="mi-footer">
+                <div class="container col-md-8 col-md-push-2 col-xs-12">
+                    <br/>
+                    <a href="http://codingcat.cn/qrcode_wechat.jpg">Copyright &copy; 一只技术宅</a>
+                    <br/>
+                </div>
+        </footer>
+
+        <!-- Javascript -->
+
+        <!-- jQuery -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <!-- Bootstrap -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <!-- Site functions and actions -->
+        <script src="{% static 'js/app.min.js' %}"></script>
+        <!-- jSuggest -->
+        <script type="text/javascript" src="{% static 'js/jquery-suggest-pack.1.0.js' %}"></script>
+
+        <script>
+        $(function(){
+              var config = {
+                  url: '{% url 'suggest' %}',
+                  queryName: 's', //url?queryName=value,默认为输入框的name属性
+{#                  jsonp: 'callback', //设置此参数名，将开启jsonp功能，否则使用json数据结构#}
+                  item: 'li', //下拉提示项目单位的选择器，默认一个li是一条提示，与processData写法相关
+                  itemOverClass: 'suggest-curr-item', //当前下拉项目的标记类，可以作为css高亮类名
+                  'z-index': 999, //提示层的层叠优先级设置，css，你懂的
+                  processData: function(data){ //自定义处理返回的数据，该方法可以return一个html字符串或jquery对象，将被写入到提示的下拉层中
+                      var template = [];
+                      template.push('<ul class="suggest-list">');
+                      var evenOdd = {'0' : 'suggest-item-even', '1': 'suggest-item-odd'}, count = 0;
+                      for(var i=0; i<data.length; i++) { //添加奇数，偶数区分
+                          template.push('<li class="' , evenOdd[(++count) % 2] , '">', data[i],'</li>');
+                      };
+                      template.push('</ul>');
+                      return template.join('');
+                  },
+                  getCurrItemValue: function($currItem){ //定义如何去取得当前提示项目的值并返回值,插件根据此函数获取当前提示项目的值，并填入input中，此方法应根据processData参数来定义
+                      return $currItem.text();
+                  },
+                  textchange: function($input){}, //不同于change事件在失去焦点触发，inchange依赖本插件，只要内容有变化，就会触发，并传入input对象
+                  onselect: function($currItem){
+                      $('#auto-suggest').text=$currItem;
+                      $('#search_form').submit();
+                  } //当选择一个下拉项目触发，并传入这个下拉项目jquery对象
+              };
+
+              $("#auto-suggest").suggest(config);
+
+                config.sequential = 1;
+                config.onselect = function($currItem){
+                    $("#selected-show").html($currItem.html());
+                };
+                config.textchange = function($input){
+                    $("#change-show").html($input.val());
+                };
+
+          });
+
+        </script>
+    </body>
+</html>

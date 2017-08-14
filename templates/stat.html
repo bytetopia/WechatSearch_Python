@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索 - 一只技术宅</title>
+    <!-- Vendors -->
+        <!-- Material design colors -->
+        <link href="{% static 'css/material-design-iconic-font.min.css' %}" rel="stylesheet">
+        <!-- CSS animations -->
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+        <!-- Site -->
+        <link rel="stylesheet" href="{% static 'css/app_1.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app_2.min.css' %}">
+        <!--user custom style-->
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <!-- Page Loader JS -->
+        <script src="{% static 'js/page-loader.min.js' %}" async></script>
+
+    <style>
+        .mi-footer{
+            position:relative !important;
+            padding:40px 0 80px 0;
+        }
+        .highlight-part{
+            font-style: normal;
+        }
+        .highlight-part span{
+            color: mediumvioletred;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Start page loader -->
+<div id="page-loader">
+    <div class="page-loader__spinner"></div>
+</div>
+<!-- End page loader -->
+
+<header id="header">
+    <div class="header__main">
+        <div class="container">
+            <a class="logo" href="/index.html">
+                <img src="{% static 'img/logo.png' %}" alt="">
+                <div class="logo__text">
+                    <span>一只技术宅</span>
+                    <span>微信号内搜索引擎</span>
+                </div>
+            </a>
+        </div>
+        <br/>
+        <div class="container">
+            <form action="/api/search" method="post" id="queryForm">
+                <div class="search">
+                    <div class="search__body mi-search-bar">
+                        {% csrf_token %}
+                        <input type="hidden" name="currentPage" id="currentPage" value="1"/>
+                        <input type="text" name="queryString" class="form-control search__input" placeholder="搜索任何你想了解的..." value="查询统计">
+                        <button class="btn btn-primary"><i class="zmdi zmdi-search f-20"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-push-2 col-xs-12 listings-list">
+                <p class="text-center">
+                    <a style="margin:10px" href="/api/hot?type=week">最近一周</a>
+                    <a style="margin:10px" href="/api/hot?type=month">最近一月</a>
+                    <a style="margin:10px" href="/api/hot?type=all">全部数据</a>
+                </p>
+                <hr/>
+                <p class="text-center">
+                    {{ type }}，{{ stat_data }}
+                </p>
+                <div class="listings-grid__item">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>关键词</th>
+                            <th>搜索次数</th>
+                            <th>平均耗时(ms)</th>
+                            <th>平均结果数</th>
+                        </tr>
+                        {% for i in detail_data %}
+                        <tr>
+                            <td>{{ i.0 }}</td>
+                            <td>{{ i.1 }}</td>
+                            <td>{{ i.2 }}</td>
+                            <td>{{ i.3 }}</td>
+                        </tr>
+                        {% empty %}
+                            <br/>选择的时段中似乎没有数据。
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="p-30"></div>
+<div class="p-30"></div>
+
+<footer class="mi-footer">
+    <div class="container col-md-8 col-md-push-2 col-xs-12">
+        <br/>
+        <a href="http://codingcat.cn/qrcode_wechat.jpg">Copyright &copy; 一只技术宅</a>
+        <br/>
+    </div>
+</footer>
+
+<!-- Javascript -->
+
+ <!-- jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Site functions and actions -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+</body>
+
+</html>
